@@ -1,0 +1,40 @@
+<%- include("partials/header.ejs"); -%>
+    <div>
+        <h1>Welcome to My Book Store</h1>
+        <hr>
+    </div>
+    <div>
+        <h2>Books I have read</h2>
+        <% if (books && books.length > 0) { %>
+            <ul>
+                <% books.forEach(function(book) { %>
+                    <li>
+                        <h3><%= book.title %></h3>
+                        <p><%= book.review %></p>
+                        <% if (book.cover_url) { %>
+                            <img src="<%= book.cover_url %>" alt="Cover of <%= book.title %>">
+                        <% } else { %>
+                            <p>No cover available</p>
+                        <% } %>
+                        <form action="/delete" method="post" style="display:inline;">
+                            <input type="hidden" name="delete" value="<%= book.title %>">
+                            <button class="btn btn-danger rounded-pill px-3" type="submit">Delete</button>
+                        </form>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No books available</p>
+        <% } %>
+    </div>
+    <h2>Add a Book to your Library</h2>
+    <form action="/submit" method="post">
+        <label for="name">Name of the Book</label><br>
+        <input type="text" name="name" id="name" required><br>
+        <label for="review">Review</label><br>
+        <input type="text" name="review" id="review" required><br>
+        <label for="submit">Submit Your Review</label><br>
+        <button type="submit" name="submit" id="delete" class="btn btn-primary rounded-pill px-3">Submit</button>
+    </form>
+
+    <%- include("partials/footer.ejs"); -%>
